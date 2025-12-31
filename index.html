@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Misthiii ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;500;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #020111 0%, #20202c 100%);
+            font-family: 'Quicksand', sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* --- Stars Animation --- */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* --- Content Container --- */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 600px;
+            min-height: 500px; /* Increased height for final message */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- The Moon --- */
+        #moon-container {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 30px;
+            position: relative;
+            opacity: 0; /* Starts hidden, fades in on load */
+            transition: opacity 2s ease;
+        }
+
+        #moon {
+            width: 100%;
+            height: 100%;
+            background-color: #f6f1d5;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #f6f1d5; /* Initial dim glow */
+            transition: all 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Texture spots on the moon */
+        #moon::before { content: ''; position: absolute; top: 20%; left: 30%; width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,0.1); }
+        #moon::after { content: ''; position: absolute; bottom: 30%; left: 60%; width: 30px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.1); }
+
+        /* Image style inside moon */
+        #user-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        /* --- Main Dialogue Text --- */
+        #dialogue {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            min-height: 60px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        /* --- Final Happy New Year Text --- */
+        #final-msg {
+            display: none;
+            margin-top: 30px;
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            color: #ffdde1;
+            text-shadow: 0 0 10px #ee9ca7, 0 0 20px #ffdde1;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.5);
+        }
+
+        /* --- Button --- */
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            color: #444;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 154, 158, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            opacity: 0;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 154, 158, 0.6);
+        }
+
+        .btn:active { transform: translateY(1px); }
+
+        /* Pointer Hint */
+        .hint {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #aaa;
+            width: 100px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, 5px); }
+        }
+
+        /* --- Utility Classes --- */
+        /* Levels of brightness for the moon */
+        .glow-level-1 { box-shadow: 0 0 50px #fff9e6 !important; background-color: #fff9e6 !important; }
+        .glow-level-2 { box-shadow: 0 0 80px #ffffff !important; background-color: #ffffff !important; }
+        
+        /* Final state for the moon container */
+        .final-glow {
+            box-shadow: 0 0 120px rgba(255, 255, 255, 0.9), 0 0 60px #ffdde1 !important; 
+            border: 2px solid white;
+            animation: pulse-glow 2s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 100px rgba(255, 255, 255, 0.8); }
+            to { box-shadow: 0 0 150px rgba(255, 255, 255, 1); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="moon-container">
+            <div id="moon">
+                <img src="pic.png" alt="My Moon" id="user-pic">
+            </div>
+        </div>
+
+        <div id="dialogue"></div>
+
+        <button id="action-btn" class="btn">
+            Button
+            <span class="hint">(click me)</span>
+        </button>
+
+        <div id="final-msg">
+            Happy New Year Misthiii,<br> my cutiee piee 🤗<br>
+            ✨✨✨
+        </div>
+
+    </div>
+
+    <script>
+        // 1. Generate Stars Background
+        function createStars() {
+            const starCount = 150;
+            const body = document.body;
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const size = Math.random() * 2 + 1; 
+                const duration = Math.random() * 3 + 2; 
+
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.setProperty('--duration', `${duration}s`);
+
+                body.appendChild(star);
+            }
+        }
+        createStars();
+
+        // 2. Variables
+        const moonContainer = document.getElementById('moon-container');
+        const moon = document.getElementById('moon');
+        const dialogue = document.getElementById('dialogue');
+        const btn = document.getElementById('action-btn');
+        const userPic = document.getElementById('user-pic');
+        const finalMsg = document.getElementById('final-msg');
+
+        // Step tracker
+        let step = 0;
+
+        // 3. Start Sequence Immediately on Load
+        window.onload = () => {
+            setTimeout(() => {
+                moonContainer.style.opacity = '1';
+                dialogue.style.opacity = '1';
+                btn.style.opacity = '1';
+                
+                dialogue.innerText = "Aree sunno na ... Adheera ho gaya... haina 🌑";
+                btn.childNodes[0].nodeValue = "haan jiii, hai tho"; // Change text excluding the span
+            }, 500);
+        };
+
+        // 4. Button Interaction Logic
+        btn.addEventListener('click', () => {
+            step++;
+
+            if (step === 1) {
+                // Change 1
+                dialogue.style.opacity = 0;
+                setTimeout(() => {
+                    dialogue.innerText = "Ye nichee wali button click karke chand ki roshni badha do na thodi ..";
+                    dialogue.style.opacity = 1;
+                    btn.childNodes[0].nodeValue = "yes kar deti hu thodi ";
+                    moon.classList.add('glow-level-1');
+                }, 300);
+            } 
+            else if (step === 2) {
+                // Change 2
+                dialogue.style.opacity = 0;
+                setTimeout(() => {
+                    dialogue.innerText = "thoda aur kardo please...";
+                    dialogue.style.opacity = 1;
+                    btn.childNodes[0].nodeValue = "okieee ";
+                    moon.classList.add('glow-level-2');
+                }, 300);
+            } 
+            else if (step === 3) {
+                // FINAL REVEAL SEQUENCE
+                
+                // Hide button
+                btn.style.transition = 'opacity 0.5s';
+                btn.style.opacity = '0';
+                setTimeout(() => btn.style.display = 'none', 500);
+
+                // Change Text
+                dialogue.style.opacity = 0;
+                
+                // Final Glow
+                moon.classList.add('final-glow');
+                
+                // Show Picture
+                userPic.style.opacity = 1;
+
+                setTimeout(() => {
+                    // Update dialogue
+                    dialogue.innerText = "ab theek hai 🤗 aap hi tho meri chand ka tukda 🤗🤗 happiest new year misthii ji 🤗🤗";
+                    dialogue.style.opacity = 1;
+                    
+                    // SHOW HAPPY NEW YEAR MESSAGE
+                    setTimeout(() => {
+                        finalMsg.style.display = 'block';
+                        // Small timeout to allow display:block to apply before transition
+                        requestAnimationFrame(() => {
+                            finalMsg.style.opacity = '1';
+                            finalMsg.style.transform = 'scale(1)';
+                        });
+                    }, 1500); // 1.5 seconds after "ab theek hai"
+
+                }, 500);
+            }
+        });
+
+    </script>
+</body>
+</html>
